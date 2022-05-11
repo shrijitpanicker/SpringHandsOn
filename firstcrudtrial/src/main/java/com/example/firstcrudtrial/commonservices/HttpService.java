@@ -26,7 +26,10 @@ public class HttpService {
 		if(headers != null) {
 			for (Map.Entry<String,String> header : headers.entrySet())
 			{
-				httpHeaders.add(header.getKey(), header.getValue());
+				if(!header.getKey().isBlank() && !header.getValue().isBlank())
+				{
+					httpHeaders.add(header.getKey(), header.getValue());
+				}
 			}
 		}
 		
