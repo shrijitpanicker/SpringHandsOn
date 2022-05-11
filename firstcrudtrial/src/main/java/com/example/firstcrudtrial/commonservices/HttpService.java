@@ -19,7 +19,7 @@ public class HttpService {
 	@Autowired
 	Helper helper;
 	
-	public <T> T GetAsync(String url, Class<T> type, Map<String, String> headers, Map<String, String> parameters)
+	public <T> T Get(String url, Class<T> classType, Map<String, String> headers, Map<String, String> parameters)
 	{
 		HttpHeaders httpHeaders = new HttpHeaders();
 		
@@ -31,10 +31,24 @@ public class HttpService {
 		}
 		
 		String fullUrl = parameters != null ? helper.GetUrlWithParameters(url, parameters) : url; 
-		HttpEntity<Object> requestEntity = new HttpEntity<>(httpHeaders);
 		
-		ResponseEntity<T> response = restTemplate.exchange(fullUrl, HttpMethod.GET, requestEntity, type);
+		if(httpHeaders.isEmpty())
+		{
+			HttpEntity<Object> requestEntity = new HttpEntity<>(httpHeaders);
+			
+			ResponseEntity<T> response = restTemplate.exchange(fullUrl, HttpMethod.GET, requestEntity, classType);
+			
+			return response.getBody();
+		}
 		
-		return response.getBody();
+		else
+		{
+			ResponseEntity<T> response = restTemplate.getForEntity(fullUrl, classType);
+			
+			return response.getBody();
+		}
+		
+		
+		
 	}
 }

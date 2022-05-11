@@ -27,7 +27,7 @@ public class CustomerService {
 			String url = helper.GetCompleteMadApiUrl(baseUrl, msisdn, Constants.PLANS_URL);
 			String xApiKey = System.getenv(Constants.X_API_KEY);
 			Map<String, String> headers = Map.of(Constants.X_API_KEY, xApiKey);
-			return httpService.GetAsync(url, CustomerPlan.class, headers, null);
+			return httpService.Get(url, CustomerPlan.class, headers, null);
 		}
 		else
 		{
