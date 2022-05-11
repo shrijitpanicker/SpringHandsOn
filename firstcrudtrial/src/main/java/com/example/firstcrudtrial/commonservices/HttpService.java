@@ -32,7 +32,7 @@ public class HttpService {
 		
 		String fullUrl = parameters != null ? helper.GetUrlWithParameters(url, parameters) : url; 
 		
-		if(httpHeaders.isEmpty())
+		if(!httpHeaders.isEmpty())
 		{
 			HttpEntity<Object> requestEntity = new HttpEntity<>(httpHeaders);
 			
