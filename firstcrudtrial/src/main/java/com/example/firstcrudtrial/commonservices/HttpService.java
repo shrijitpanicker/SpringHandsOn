@@ -35,18 +35,18 @@ public class HttpService {
 		
 		String fullUrl = parameters != null ? helper.GetUrlWithParameters(url, parameters) : url; 
 		
-		if(!httpHeaders.isEmpty())
+		if(httpHeaders.isEmpty())
 		{
-			HttpEntity<Object> requestEntity = new HttpEntity<>(httpHeaders);
-			
-			ResponseEntity<T> response = restTemplate.exchange(fullUrl, HttpMethod.GET, requestEntity, classType);
+			ResponseEntity<T> response = restTemplate.getForEntity(fullUrl, classType);
 			
 			return response.getBody();
 		}
 		
 		else
 		{
-			ResponseEntity<T> response = restTemplate.getForEntity(fullUrl, classType);
+			HttpEntity<Object> requestEntity = new HttpEntity<>(httpHeaders);
+			
+			ResponseEntity<T> response = restTemplate.exchange(fullUrl, HttpMethod.GET, requestEntity, classType);
 			
 			return response.getBody();
 		}
